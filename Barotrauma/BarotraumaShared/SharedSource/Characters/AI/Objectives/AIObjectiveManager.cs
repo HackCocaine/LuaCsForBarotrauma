@@ -610,7 +610,7 @@ namespace Barotrauma
                     {
                         KeepActiveWhenReady = true,
                         CheckInventory = true,
-                        Equip = false,
+                        Equip = true,
                         FindAllItems = true,
                         RequireNonEmpty = false
                     };
