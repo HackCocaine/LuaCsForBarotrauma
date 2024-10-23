@@ -128,7 +128,7 @@ namespace Barotrauma
         public static float GetTargetPriority(Item item, Character character, float requiredSuccessFactor = 0)
         {
             float damagePriority = MathHelper.Lerp(1, 0, item.Condition / item.MaxCondition);
-            float successFactor = item.Repairables.Min(r => r.DegreeOfSucess(character));
+            float successFactor = item.Repairables.Min(r => r.DegreeOfSuccess(character));
             if (successFactor < requiredSuccessFactor)
             {
                 return 0;
