@@ -15,7 +15,6 @@ namespace Barotrauma
 
             foreach (Item item in shipCommandManager.CommandedSubmarine.GetItems(true))
             {
-                if (item.Name.ToLower() == "reactor") { continue; }
                 if (!AIObjectiveRepairItems.ViableForRepair(item, shipCommandManager.character, shipCommandManager.character.AIController as HumanAIController)) { continue; }
                 if (AIObjectiveRepairItems.NearlyFullCondition(item)) { continue; }
                 itemsNeedingRepair.Add(item);
