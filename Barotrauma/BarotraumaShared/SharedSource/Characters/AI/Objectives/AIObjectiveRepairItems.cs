@@ -21,7 +21,7 @@ namespace Barotrauma
         public override bool AllowMultipleInstances => true;
         protected override bool AllowInFriendlySubs => true;
 
-        public const float RequiredSuccessFactor = 1.0f;
+        public const float RequiredSuccessFactor = 0.8f;
 
         public override bool IsDuplicate<T>(T otherObjective) => otherObjective is AIObjectiveRepairItems repairObjective && objectiveManager.IsOrder(repairObjective) == objectiveManager.IsOrder(this);
 
@@ -82,6 +82,11 @@ namespace Barotrauma
         public static bool ViableForRepair(Item item, Character character, HumanAIController humanAIController)
         {
             if (!IsValidTarget(item, character)) { return false; }
+            float successFactor = item.Repairables.Min(r => r.DegreeOfSuccess(character));
+            if (successFactor < AIObjectiveRepairItems.RequiredSuccessFactor)
+            {
+            return false; // Si el factor de éxito es menor al umbral, no es viable para reparación
+            }
             if (item.CurrentHull == null) { return true; }
             if (item.CurrentHull.FireSources.Count > 0) { return false; }
             // Don't repair items in rooms that have enemies inside.
@@ -128,11 +133,6 @@ namespace Barotrauma
         public static float GetTargetPriority(Item item, Character character, float requiredSuccessFactor = 0)
         {
             float damagePriority = MathHelper.Lerp(1, 0, item.Condition / item.MaxCondition);
-            float successFactor = item.Repairables.Min(r => r.DegreeOfSuccess(character));
-            if (successFactor < requiredSuccessFactor)
-            {
-                return 0;
-            }
             return MathHelper.Lerp(0, 100, MathHelper.Clamp(damagePriority * successFactor, 0, 1));
         }
 
