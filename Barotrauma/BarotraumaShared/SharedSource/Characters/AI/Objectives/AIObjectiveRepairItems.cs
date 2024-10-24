@@ -21,7 +21,7 @@ namespace Barotrauma
         public override bool AllowMultipleInstances => true;
         protected override bool AllowInFriendlySubs => true;
 
-        public const float RequiredSuccessFactor = 0.8f;
+        public const float RequiredSuccessFactor = 0.5f;
 
         public override bool IsDuplicate<T>(T otherObjective) => otherObjective is AIObjectiveRepairItems repairObjective && objectiveManager.IsOrder(repairObjective) == objectiveManager.IsOrder(this);
 
